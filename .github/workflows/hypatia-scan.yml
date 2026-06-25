@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: MPL-2.0
+name: Hypatia Security Scan
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+  security-events: read
+
+jobs:
+  scan:
+    uses: hyperpolymath/standards/.github/workflows/hypatia-scan-reusable.yml@09e7023d24682621bea4e11965a1ef5e87d86c3b
+    timeout-minutes: 20
