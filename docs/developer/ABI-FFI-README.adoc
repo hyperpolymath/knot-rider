@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: CC-BY-SA-4.0
 // Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 = ABI/FFI Standards
-{{~ Aditionally delete this line and fill out the template below ~}}
-
-# {{PROJECT}} ABI/FFI Documentation
+# knot-rider ABI/FFI Documentation
 
 ## Overview
 
@@ -29,7 +27,7 @@ This library follows the **Hyperpolymath RSR Standard** for ABI and FFI design:
                   ▼
 ┌─────────────────────────────────────────────┐
 │  C Headers (auto-generated)                 │
-│  generated/abi/{{project}}.h                │
+│  generated/abi/knot_rider.h                │
 └─────────────────┬───────────────────────────┘
                   │
                   │ imported by
@@ -42,7 +40,7 @@ This library follows the **Hyperpolymath RSR Standard** for ABI and FFI design:
 │  - Memory-safe by default                   │
 └─────────────────┬───────────────────────────┘
                   │
-                  │ compiled to lib{{project}}.so/.a
+                  │ compiled to libknot_rider.so/.a
                   ▼
 ┌─────────────────────────────────────────────┐
 │  Any Language via C ABI                     │
@@ -53,7 +51,7 @@ This library follows the **Hyperpolymath RSR Standard** for ABI and FFI design:
 ## Directory Structure
 
 ```
-{{project}}/
+knot_rider/
 ├── src/
 │   ├── abi/                    # ABI definitions (Idris2)
 │   │   ├── Types.idr           # Core type definitions with proofs
@@ -70,11 +68,11 @@ This library follows the **Hyperpolymath RSR Standard** for ABI and FFI design:
 │       ├── test/
 │       │   └── integration_test.zig
 │       └── include/
-│           └── {{project}}.h   # C header (optional, can be generated)
+│           └── knot_rider.h   # C header (optional, can be generated)
 │
 ├── generated/                  # Auto-generated files
 │   └── abi/
-│       └── {{project}}.h       # Generated from Idris2 ABI
+│       └── knot_rider.h       # Generated from Idris2 ABI
 │
 └── bindings/                   # Language-specific wrappers (optional)
     ├── rust/
@@ -202,7 +200,7 @@ zig build test                    # Run tests
 
 ```bash
 cd src/abi
-idris2 --cg c-header Types.idr -o ../../generated/abi/{{project}}.h
+idris2 --cg c-header Types.idr -o ../../generated/abi/knot_rider.h
 ```
 
 ### Cross-Compile
@@ -225,32 +223,32 @@ zig build -Dtarget=x86_64-windows
 ### From C
 
 ```c
-#include "{{project}}.h"
+#include "knot_rider.h"
 
 int main() {
-    void* handle = {{project}}_init();
+    void* handle = knot_rider_init();
     if (!handle) return 1;
 
-    int result = {{project}}_process(handle, 42);
+    int result = knot_rider_process(handle, 42);
     if (result != 0) {
-        const char* err = {{project}}_last_error();
+        const char* err = knot_rider_last_error();
         fprintf(stderr, "Error: %s\n", err);
     }
 
-    {{project}}_free(handle);
+    knot_rider_free(handle);
     return 0;
 }
 ```
 
 Compile with:
 ```bash
-gcc -o example example.c -l{{project}} -L./zig-out/lib
+gcc -o example example.c -lknot_rider -L./zig-out/lib
 ```
 
 ### From Idris2
 
 ```idris
-import {{PROJECT}}.ABI.Foreign
+import Abi.Foreign
 
 main : IO ()
 main = do
@@ -267,22 +265,22 @@ main = do
 ### From Rust
 
 ```rust
-#[link(name = "{{project}}")]
+#[link(name = "knot_rider")]
 extern "C" {
-    fn {{project}}_init() -> *mut std::ffi::c_void;
-    fn {{project}}_free(handle: *mut std::ffi::c_void);
-    fn {{project}}_process(handle: *mut std::ffi::c_void, input: u32) -> i32;
+    fn knot_rider_init() -> *mut std::ffi::c_void;
+    fn knot_rider_free(handle: *mut std::ffi::c_void);
+    fn knot_rider_process(handle: *mut std::ffi::c_void, input: u32) -> i32;
 }
 
 fn main() {
     unsafe {
-        let handle = {{project}}_init();
+        let handle = knot_rider_init();
         assert!(!handle.is_null());
 
-        let result = {{project}}_process(handle, 42);
+        let result = knot_rider_process(handle, 42);
         assert_eq!(result, 0);
 
-        {{project}}_free(handle);
+        knot_rider_free(handle);
     }
 }
 ```
@@ -290,21 +288,21 @@ fn main() {
 ### From Julia
 
 ```julia
-const lib{{project}} = "lib{{project}}"
+const libknot_rider = "libknot_rider"
 
 function init()
-    handle = ccall((:{{project}}_init, lib{{project}}), Ptr{Cvoid}, ())
+    handle = ccall((:knot_rider_init, libknot_rider), Ptr{Cvoid}, ())
     handle == C_NULL && error("Failed to initialize")
     handle
 end
 
 function process(handle, input)
-    result = ccall((:{{project}}_process, lib{{project}}), Cint, (Ptr{Cvoid}, UInt32), handle, input)
+    result = ccall((:knot_rider_process, libknot_rider), Cint, (Ptr{Cvoid}, UInt32), handle, input)
     result
 end
 
 function cleanup(handle)
-    ccall((:{{project}}_free, lib{{project}}), Cvoid, (Ptr{Cvoid},), handle)
+    ccall((:knot_rider_free, libknot_rider), Cvoid, (Ptr{Cvoid},), handle)
 end
 
 # Usage
@@ -358,7 +356,7 @@ When modifying the ABI/FFI:
 
 2. **Generate C header**
    ```bash
-   idris2 --cg c-header src/interface/Abi/Types.idr -o generated/abi/{{project}}.h
+   idris2 --cg c-header src/interface/Abi/Types.idr -o generated/abi/knot_rider.h
    ```
 
 3. **Update FFI implementation** (`ffi/zig/src/main.zig`)
@@ -377,10 +375,10 @@ When modifying the ABI/FFI:
 
 ## License
 
-{{LICENSE}}
+MPL-2.0
 
 ## See Also
 
 - [Idris2 Documentation](https://idris2.readthedocs.io)
 - [Zig Documentation](https://ziglang.org/documentation/master/)
-- [Rhodium Standard Repositories](https://github.com/{{OWNER}}/rhodium-standard-repositories)
+- [Rhodium Standard Repositories](https://github.com/hyperpolymath/rhodium-standard-repositories)
