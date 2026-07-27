@@ -5,11 +5,11 @@
 #
 [metadata]
 version = "0.1.0"
-last-updated = "{{CURRENT_DATE}}"
+last-updated = "2026-07-27"
 
 [project]
 name = "[YOUR-REPO-NAME]"
-purpose = "{{PROJECT_DESCRIPTION}}"
+purpose = "RSR-scaffolded repository; specific purpose not documented (see README)"
 
 [ai-allocation]
 agents = [

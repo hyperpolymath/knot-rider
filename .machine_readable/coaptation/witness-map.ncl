@@ -53,19 +53,23 @@
   # declared capability awaiting a descriptile that actually carries such evidence.
 
   # --- INTEND: a committed intent realised by the descriptive self-model ---
+  # Fixed 2026-07-27: ECOSYSTEM.type was still the literal "repository-template"
+  # left over from an un-instantiated scaffold. The init intent for an
+  # INSTANTIATED repo is that it is no longer template-shaped.
   "intend.repo-initialization" = {
     kind = "descriptile",
-    witnesses = [ { fact = "ecosystem.type", op = 'equals, arg = "repository-template" } ],
-    note = "ECOSYSTEM declares this repo IS a template ⇒ the init intent is realised",
+    witnesses = [ { fact = "ecosystem.type", op = 'not_equals, arg = "repository-template" } ],
+    note = "ECOSYSTEM no longer declares this repo IS the template ⇒ the init intent is realised",
   },
 
   # --- ADJUST: accessibility/hygiene posture (advisory; never gates) ---
-  # The ANCHOR identity block still carries {{PROJECT_NAME}}; for the template
-  # itself that is expected, but it is honestly a posture dip worth surfacing.
+  # Fixed 2026-07-27: the ANCHOR identity block was un-substituted
+  # ({{PROJECT_NAME}} etc.); it now carries real values, so this witness
+  # passes for real rather than by coincidence.
   "adjust.placeholder-drift" = {
     kind = "descriptile",
     witnesses = [ { fact = "anchor.project", op = 'not_contains, arg = "{{" } ],
-    note = "ANCHOR.identity.project is un-substituted ({{PROJECT_NAME}}) ⇒ posture dip",
+    note = "ANCHOR.identity.project is substituted ⇒ no posture dip",
   },
 
   # --- BUST: recognised break. For bust, a HOLDING witness means ALARM (active

@@ -5,8 +5,8 @@
 # check-root-shape.sh — fail when the repository root contains entries that
 # are not on the canonical allowlist (.machine_readable/root-allow.txt).
 #
-# Companion to scripts/validate-template.sh: that script enforces required
-# files; this one enforces that nothing else has crept in.
+# This script enforces that nothing extra has crept in at the repository
+# root (required-file presence is enforced by must-check / must.a2ml).
 #
 # Exit codes:
 #   0 — root matches allowlist
