@@ -52,7 +52,7 @@ file. Bring a counter-example, a failing run, or a contradicting source.
 | The Zig FFI library builds clean | affirmed | `cd src/interface/ffi && zig build` — exit 0
 | The Zig FFI unit + integration tests pass | affirmed | `cd src/interface/ffi && zig build test` — 4/4 tests pass, exit 0
 | Zig sources are correctly formatted | affirmed | `zig fmt --check src/interface/ffi` — exit 0
-| RSR identity placeholders (`{{PROJECT_NAME}}` etc.) are substituted with real values across the tree | affirmed | manual grep sweep + `just verify-template`; remaining `{{...}}` hits are intentional (Justfile interpolation, `docs-template/`, detector patterns, ADR templates)
+| RSR identity placeholders (`knot-rider` etc.) are substituted with real values across the tree | affirmed | manual grep sweep + `just verify-template`; remaining `{{...}}` hits are intentional (Justfile interpolation, `docs-template/`, detector patterns, ADR templates)
 | The `.github/workflows/container-build.yml` and other edited workflow YAML still parse | affirmed | `python3 -c "import yaml; yaml.safe_load(open(f))"` on each edited workflow
 | `CLAUDE.md`'s generated arrival-pack region matches the `.machine_readable/6a2/` a2ml source | affirmed | `just claude-md && just validate-claude-md` — reports in sync
 |===

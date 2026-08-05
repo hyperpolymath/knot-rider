@@ -64,7 +64,7 @@
 
   # --- ADJUST: accessibility/hygiene posture (advisory; never gates) ---
   # Fixed 2026-07-27: the ANCHOR identity block was un-substituted
-  # ({{PROJECT_NAME}} etc.); it now carries real values, so this witness
+  # (knot-rider etc.); it now carries real values, so this witness
   # passes for real rather than by coincidence.
   "adjust.placeholder-drift" = {
     kind = "descriptile",
