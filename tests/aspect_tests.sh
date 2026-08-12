@@ -39,7 +39,7 @@ fail() { red "  FAIL: $1"; FAIL=$((FAIL + 1)); }
 warn() { yellow "  WARN: $1"; WARN=$((WARN + 1)); }
 
 echo "═══════════════════════════════════════════════════════════════"
-echo "  {{PROJECT}} — Aspect Tests (Cross-Cutting Concerns)"
+echo "  knot_rider — Aspect Tests (Cross-Cutting Concerns)"
 echo "═══════════════════════════════════════════════════════════════"
 echo ""
 
@@ -54,7 +54,7 @@ while IFS= read -r -d '' f; do
         warn "Missing SPDX header: $f"
         MISSING_SPDX=$((MISSING_SPDX + 1))
     fi
-done < <(find src/ -type f \( -name "*.rs" -o -name "*.zig" -o -name "*.res" -o -name "*.ex" -o -name "*.exs" -o -name "*.gleam" -o -name "*.idr" -o -name "*.sh" \) -print0 2>/dev/null)
+done < <(find src/ \( -name ".zig-cache" -o -name "zig-out" \) -prune -o -type f \( -name "*.rs" -o -name "*.zig" -o -name "*.res" -o -name "*.ex" -o -name "*.exs" -o -name "*.gleam" -o -name "*.idr" -o -name "*.sh" \) -print0 2>/dev/null)
 
 if [ "$MISSING_SPDX" -eq 0 ]; then
     pass "All source files have SPDX headers"
@@ -77,7 +77,9 @@ else
 fi
 
 # Coq/Lean dangerous patterns
-DANGEROUS_PROOF=$(grep -rn '\bAdmitted\b\|\bsorry\b\|\bunsafeCoerce\b\|\bObj\.magic\b' src/ verification/ 2>/dev/null | grep -v "test" | grep -v "comment" || true)
+# --exclude *.adoc/*.md: prose that documents/prohibits these patterns by
+# name (e.g. "NO Admitted allowed") is not the same as code that uses them.
+DANGEROUS_PROOF=$(grep -rn --exclude='*.adoc' --exclude='*.md' '\bAdmitted\b\|\bsorry\b\|\bunsafeCoerce\b\|\bObj\.magic\b' src/ verification/ 2>/dev/null | grep -v "test" | grep -v "comment" | grep -v "NO Admitted allowed" || true)
 if [ -n "$DANGEROUS_PROOF" ]; then
     fail "Dangerous proof patterns found:"
     echo "$DANGEROUS_PROOF" | head -5

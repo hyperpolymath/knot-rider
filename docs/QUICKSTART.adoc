@@ -11,16 +11,19 @@ Get up and running in 60 seconds.
 * just (command runner)
 * Your language toolchain (see Justfile for details)
 
-== From Template (New Project)
+== Clone and build
 
 [source,bash]
 ----
-git clone https://github.com/{{OWNER}}/rsr-template-repo my-project
-cd my-project
-rm -rf .git && git init -b main
-just init       # interactive placeholder replacement
+git clone https://github.com/hyperpolymath/knot-rider.git
+cd knot-rider
+just deps       # verify the Zig toolchain is present
+just build      # cd src/interface/ffi && zig build
+just test       # cd src/interface/ffi && zig build test
 ----
 
 == Project Structure
 
-See README.adoc in the root for the Dual-Track architecture summary.
+See README.adoc in the root for the repository map. Note: this repo's
+specific technical purpose is undocumented — see README.adoc's "What this
+is" section before assuming what it's for.
