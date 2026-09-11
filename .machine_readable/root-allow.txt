@@ -42,6 +42,7 @@ abi.ipkg                   # Idris2 package for the ABI seam; sourcedir=src/inte
 .githooks/                 # Repository-owned validation hooks installed by the documented hook setup.
 .gitignore
 .hypatia-ignore           # Hypatia scan ignore patterns
+.mise.toml                # mise tool versions file (replaces .tool-versions for mise users)
 .tool-versions
 
 # ─── Directories ─────────────────────────────────────────────────────────────
