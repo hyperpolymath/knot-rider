@@ -1,0 +1,176 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
+#
+# Knot-Rider CI: Benchmarks and Tests
+#
+# Runs:
+# 1. Knot-Rider specific processing tests
+# 2. Integration tests with KRL and Quandledb
+# 3. Central benchmarks from proven-tests-and-benchmarks repo
+# 4. GitGuardian secret scanning
+# 5. SonarQubeCloud quality analysis
+
+name: CI - Tests & Benchmarks
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'src/**'
+      - 'container/**'
+      - '.github/workflows/ci-benchmarks.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'container/**'
+      - '.github/workflows/ci-benchmarks.yml'
+  workflow_dispatch:
+  schedule:
+    # Nightly benchmarks
+    - cron: '0 2 * * *'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ci-benchmarks-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BENCHMARKS_REPO: hyperpolymath/proven
+  BENCHMARKS_PATH: benchmarks/knot-rider
+
+jobs:
+  # Job 1: Run Knot-Rider-specific tests
+  knot-rider-tests:
+    name: Knot-Rider Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout Knot-Rider repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up dependencies
+        run: |
+          # TODO: Replace with actual Knot-Rider setup
+          echo "Knot-Rider environment setup"
+
+      - name: Run processing tests
+        run: |
+          # TODO: Replace with actual Knot-Rider processing tests
+          echo "Running Knot-Rider processing tests"
+
+      - name: Run integration tests with KRL
+        run: |
+          # TODO: Replace with actual KRL integration tests
+          echo "Running KRL integration tests"
+
+      - name: Run integration tests with Quandledb
+        run: |
+          # TODO: Replace with actual Quandledb integration tests
+          echo "Running Quandledb integration tests"
+
+  # Job 2: Run central benchmarks
+  benchmarks:
+    name: Knot-Rider Benchmarks
+    needs: knot-rider-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout Knot-Rider repo
+        uses: actions/checkout@v4
+
+      - name: Checkout proven benchmarks repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.BENCHMARKS_REPO }}
+          path: proven
+
+      - name: Install benchmark dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq bc
+
+      - name: Run Knot-Rider benchmarks
+        run: |
+          cd proven/benchmarks/knot-rider
+          # Run all benchmarks and compare with baselines
+          ./run.sh --all
+        
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: knot-rider-benchmark-results
+          path: proven/benchmarks/knot-rider/results.json
+          retention-days: 30
+
+  # Job 3: GitGuardian secret scanning
+  gitguardian:
+    name: GitGuardian Secret Scan
+    needs: knot-rider-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: GitGuardian scan
+        uses: GitGuardian/ggshield-action@v1
+        with:
+          args: scan repo .
+        env:
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+
+  # Job 4: SonarQubeCloud quality analysis
+  sonarqube:
+    name: SonarQubeCloud Analysis
+    needs: knot-rider-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: SonarQube scan
+        uses: SonarSource/sonarqube-scan-action@v2
+        with:
+          args: >-
+            -Dsonar.projectKey=knot-rider
+            -Dsonar.organization=hyperpolymath
+            -Dsonar.sources=src,container
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+
+  # Job 5: CodeQL analysis (existing)
+  codeql:
+    name: CodeQL Analysis
+    needs: knot-rider-tests
+    uses: ./.github/workflows/codeql.yml
+    secrets: inherit
+
+  # Job 6: Dependabot (existing)
+  dependabot:
+    name: Dependabot
+    needs: knot-rider-tests
+    uses: ./.github/workflows/dependabot-automerge.yml
+    secrets: inherit
+
+  # Job 7: Container build (existing)
+  container:
+    name: Container Build
+    needs: knot-rider-tests
+    uses: ./.github/workflows/container-build.yml
+    secrets: inherit
