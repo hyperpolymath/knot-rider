@@ -24,8 +24,3 @@
 # and third_party/ carve-outs. Scaffolded repos inherit this file, so the
 # exemption travels with the template.
 structural_drift/SD022:docs-template/
-
-# This repository currently keeps descriptive state in `.machine_readable/6a2/`.
-# Hypatia's SD004 currently assumes `.machine_readable/descriptiles/`, which is
-# not yet this repository's canonical layout.
-structural_drift/SD004:.machine_readable/6a2/
