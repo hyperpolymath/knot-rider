@@ -25,7 +25,7 @@ ____
 
 `knot-rider` is a repository scaffolded from the *Rhodium Standard Repository
 (RSR)* template (`hyperpolymath/rsr-template-repo`). It was never
-instantiated after scaffolding — `{{PLACEHOLDER}}` tokens survived
+instantiated after scaffolding — brace-delimited template tokens survived
 throughout, including in the `.zig` sources, which meant the Zig genuinely
 did not parse. That has now been cured: identity placeholders are
 substituted, the Justfile recipes are wired to real commands, and the Zig FFI
