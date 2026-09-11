@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MPL-2.0
+# This file is maintained for compatibility with tools that expect .tool-versions
+# Primary toolchain configuration is in .mise.toml
+# Run: mise trust && mise install
+rust nightly
