@@ -20,14 +20,15 @@ AFFIRMATION.adoc           # dated/signed honesty snapshot (README/EXPLAINME/AFF
 GOVERNANCE.adoc            # governance model (validator accepts root or docs/governance/)
 MAINTAINERS.adoc           # maintainer roster
 CONTRIBUTING.md            # REQUIRED AT ROOT by scorecard-enforcer/openssf-compliance/quality CI (test -f, no .github fallback). The fuller copy in .github/ is GitHub's auto-discovery convention; dedupe is an owner decision (would need those CI checks updated to accept .github/).
-CONTRIBUTING.adoc          # Project-native contribution guide; accepted by openssf-compliance CI.
+CONTRIBUTING.adoc          # AsciiDoc variant used by this repo (repo-level decision: adoc vs md)
+GEMINI.md                 # Pointer to canonical agent instructions (CLAUDE.md until AGENTS.md exists)
 SECURITY.md                # REQUIRED AT ROOT by scorecard-enforcer CI + the security-policy contractile (test -f SECURITY.md). See CONTRIBUTING.md note re: the .github/ copy.
 LICENSE
 LICENSES/                  # REUSE licence texts (MPL-2.0.txt + CC-BY-SA-4.0.txt) for the dual-licence model (code MPL-2.0 / docs CC-BY-SA-4.0)
 CHANGELOG.md
-CHANGELOG.adoc             # Project changelog in the repository's AsciiDoc-native format.
+CHANGELOG.adoc             # AsciiDoc variant used by this repo (repo-level decision: adoc vs md)
 CITATION.cff               # citation metadata (surfaced at root by #96)
-CLAUDE.md                  # Generated agent arrival pack; source and verifier live under .machine_readable/arrival-pack/.
+CLAUDE.md                 # CLI-specific configuration/metadata for Claude Code
 
 # ─── Build entry points (must live at root for their tooling) ────────────────
 Justfile                   # delegates phases to build/just/*.just
@@ -40,7 +41,8 @@ abi.ipkg                   # Idris2 package for the ABI seam; sourcedir=src/inte
 .gitattributes
 .githooks/                 # Repository-owned validation hooks installed by the documented hook setup.
 .gitignore
-.hypatia-ignore            # Scoped, documented exemptions consumed by the repository's Hypatia security scan.
+.githooks/                # Git hooks for local development
+.hypatia-ignore           # Hypatia scan ignore patterns
 .tool-versions
 
 # ─── Directories ─────────────────────────────────────────────────────────────
