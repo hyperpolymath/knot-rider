@@ -4,7 +4,7 @@
 # STATE.a2ml — Project state checkpoint
 #
 # knot-rider was scaffolded from rsr-template-repo on 2026-03-16 but never
-# instantiated (all {{PLACEHOLDER}} tokens survived, including in the .zig
+# instantiated (all brace-delimited template tokens survived, including in the .zig
 # sources, which meant the Zig genuinely did not parse). Fixed 2026-07-27:
 # identity placeholders substituted, template machinery removed, Justfile
 # stubs wired to real commands, Zig FFI seam made to build and test clean.
