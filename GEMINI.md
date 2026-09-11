@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MPL-2.0 -->
 # Pointer
 
 This repository has no `AGENTS.md` yet. Until it does, the instructions
