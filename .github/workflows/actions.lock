@@ -30,15 +30,15 @@ workflows:
         - 'actions/deploy-pages@v5.0.1'
         - 'actions/upload-pages-artifact@v5.0.0'
     '.github/workflows/push-email-notify.yml':
-        - 'hyperpolymath/smtp-notify-action@v0.2.0'
+        - 'dawidd6/action-send-mail@v3.12.0'
     '.github/workflows/quality.yml':
         - 'actions/checkout@v7.0.1'
-        - 'editorconfig-checker/action-editorconfig-checker@v3.0.0'
+        - 'editorconfig-checker/action-editorconfig-checker@v2.2.0'
         - 'trufflesecurity/trufflehog@v3.96.0'
     '.github/workflows/release.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/upload-artifact@v7.0.1'
-        - 'softprops/action-gh-release@v3.0.3'
+        - 'softprops/action-gh-release@v3.0.2'
     '.github/workflows/rhodibot.yml':
         - 'actions/checkout@v7.0.1'
     '.github/workflows/runtime-policy.yml':
@@ -100,19 +100,19 @@ dependencies:
         repo_id: 496012378
         uses:
             - 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f'
-    'hyperpolymath/smtp-notify-action@v0.2.0':
-        ref: 'v0.2.0'
-        commit: 'sha1-ede1191ef6ff3ac02c4f4d9efdf837ee517e11d7'
-        owner_id: 6759885
-        repo_id: 1352485172
+    'dawidd6/action-send-mail@v3.12.0':
+        ref: 'v3.12.0'
+        commit: 'sha1-12335b969ae3fb71bee5f2c6b829744261aec34c'
+        owner_id: 9713907
+        repo_id: 222439721
     'dependabot/fetch-metadata@v3.1.0':
         ref: 'v3.1.0'
         commit: 'sha1-25dd0e34f4fe68f24cc83900b1fe3fe149efef98'
         owner_id: 27347476
         repo_id: 371068214
-    'editorconfig-checker/action-editorconfig-checker@v3.0.0':
-        ref: 'v3.0.0'
-        commit: 'sha1-REGENERATE_WITH_GH_ACTIONS_LOCK'
+    'editorconfig-checker/action-editorconfig-checker@v2.2.0':
+        ref: 'v2.2.0'
+        commit: 'sha1-840e866d93b8e032123c23bac69dece044d4d84c'
         owner_id: 26415196
         repo_id: 297874902
     'erlef/setup-beam@v1.24.1':
@@ -125,21 +125,21 @@ dependencies:
         commit: 'sha1-f205ea1c3313d32999d8d6a48b4f6530d4437b38'
         owner_id: 9919
         repo_id: 259445878
-    'hyperpolymath/cicd-suite@fc64172a00000000000000000000000000000000':
-        ref: 'fc64172a00000000000000000000000000000000'
-        commit: 'sha1-fc64172a00000000000000000000000000000000'
+    'hyperpolymath/cicd-suite@main':
+        ref: 'main'
+        commit: 'sha1-0405f138caa8e9ac10bc181f3b46224bbdcda693'
         owner_id: 6759885
         repo_id: 1326697643
         uses:
-            - 'hyperpolymath/deed-ecosystem@f7a40a4d5cc82b2e73f861119baa6818d77a448d'
-            - 'hyperpolymath/k9-ecosystem@2155aa26a21758f2ba119f61bc7e0e1981c106fb'
-    'hyperpolymath/deed-ecosystem@f7a40a4d5cc82b2e73f861119baa6818d77a448d':
-        ref: 'f7a40a4d5cc82b2e73f861119baa6818d77a448d'
+            - 'hyperpolymath/deed-ecosystem@main'
+            - 'hyperpolymath/k9-ecosystem@main'
+    'hyperpolymath/deed-ecosystem@main':
+        ref: 'main'
         commit: 'sha1-f7a40a4d5cc82b2e73f861119baa6818d77a448d'
         owner_id: 6759885
         repo_id: 1275649586
-    'hyperpolymath/k9-ecosystem@2155aa26a21758f2ba119f61bc7e0e1981c106fb':
-        ref: '2155aa26a21758f2ba119f61bc7e0e1981c106fb'
+    'hyperpolymath/k9-ecosystem@main':
+        ref: 'main'
         commit: 'sha1-2155aa26a21758f2ba119f61bc7e0e1981c106fb'
         owner_id: 6759885
         repo_id: 1275650185
