@@ -11,7 +11,7 @@
 # 5. Dependabot
 # 6. Container build
 
-name: CI - Tests & Benchmarks
+name: "🟡 CHECK: CI - Tests & Benchmarks
 
 on:
   push:
@@ -135,4 +135,4 @@ jobs:
   container:
     name: Container Build
     uses: ./.github/workflows/container-build.yml
-    secrets: inherit
+    secrets: inherit"
