@@ -5,6 +5,11 @@ version: 'v0.0.2'
 workflows:
     '.github/workflows/boj-build.yml':
         - 'actions/checkout@v7.0.1'
+    '.github/workflows/ci-benchmarks.yml':
+        - 'actions/checkout@v7.0.1'
+        - 'actions/upload-artifact@v7.0.1'
+        - 'gitguardian/ggshield-action@v1.54.0'
+        - 'sonarsource/sonarqube-scan-action@v8.2.1'
     '.github/workflows/codeql.yml':
         - 'actions/checkout@v7.0.1'
         - 'github/codeql-action@v4.37.9'
@@ -119,6 +124,11 @@ dependencies:
         commit: 'sha1-54075bcc5e249e4758d363f27d099f55d843f124'
         owner_id: 47606891
         repo_id: 331103973
+    'gitguardian/ggshield-action@v1.54.0':
+        ref: 'v1.54.0'
+        commit: 'sha1-4a703dc496925eb3a123c01aab13aa01deaf9ce5'
+        owner_id: 27360172
+        repo_id: 272400318
     'github/codeql-action@v4.37.9':
         ref: 'v4.37.9'
         commit: 'sha1-cdf488f595d80d6e07e03d4674febd5ab45fa938'
@@ -157,6 +167,11 @@ dependencies:
         commit: 'sha1-efb35369e0ad2afab669f228072c1b0d510eae64'
         owner_id: 2242
         repo_id: 204253808
+    'sonarsource/sonarqube-scan-action@v8.2.1':
+        ref: 'v8.2.1'
+        commit: 'sha1-5bc5285b684b9f0e940031dc8ddc4b6387a2f493'
+        owner_id: 545988
+        repo_id: 366408409
     'trufflesecurity/trufflehog@v3.95.8':
         ref: 'v3.95.8'
         commit: 'sha1-00155c9dc586f34d189adc83d3ac2698c2ec551f'
