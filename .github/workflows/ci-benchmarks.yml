@@ -91,7 +91,7 @@ jobs:
           fetch-depth: 0
 
       - name: GitGuardian scan
-        uses: GitGuardian/ggshield-action@master
+        uses: GitGuardian/ggshield-action@4a703dc496925eb3a123c01aab13aa01deaf9ce5
         with:
           args: scan repo .
         env:
@@ -110,7 +110,7 @@ jobs:
           fetch-depth: 0
 
       - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@master
+        uses: SonarSource/sonarqube-scan-action@5bc5285b684b9f0e940031dc8ddc4b6387a2f493
         with:
           args: >-
             -Dsonar.projectKey=knot-rider
