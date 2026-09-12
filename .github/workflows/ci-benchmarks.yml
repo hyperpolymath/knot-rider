@@ -1,0 +1,139 @@
+# SPDX-License-Identifier: MPL-2.0
+# This workflow is managed by gh actions-lock.
+# Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
+#
+# Knot-Rider CI: Benchmarks and Tests
+#
+# Runs:
+# 1. Central benchmarks from proven-tests-and-benchmarks repo
+# 2. GitGuardian secret scanning
+# 3. SonarQubeCloud quality analysis
+# 4. CodeQL analysis
+# 5. Dependabot
+# 6. Container build
+
+name: CI - Tests & Benchmarks
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'src/**'
+      - 'container/**'
+      - '.github/workflows/ci-benchmarks.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'container/**'
+      - '.github/workflows/ci-benchmarks.yml'
+  workflow_dispatch:
+  schedule:
+    # Nightly benchmarks
+    - cron: '0 2 * * *'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ci-benchmarks-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BENCHMARKS_REPO: hyperpolymath/proven
+  BENCHMARKS_PATH: benchmarks/knot-rider
+
+jobs:
+  # Job 1: Run central benchmarks
+  benchmarks:
+    name: Knot-Rider Benchmarks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout Knot-Rider repo
+        uses: actions/checkout@v7.0.1
+
+      - name: Checkout proven benchmarks repo
+        uses: actions/checkout@v7.0.1
+        with:
+          repository: ${{ env.BENCHMARKS_REPO }}
+          path: proven
+
+      - name: Install benchmark dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq bc
+
+      - name: Run Knot-Rider benchmarks
+        run: |
+          cd proven/benchmarks/knot-rider
+          ./run.sh --all
+          
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v7.0.1
+        if: always()
+        with:
+          name: knot-rider-benchmark-results
+          path: proven/benchmarks/knot-rider/results.json
+          retention-days: 30
+
+  # Job 2: GitGuardian secret scanning
+  gitguardian:
+    name: GitGuardian Secret Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: GitGuardian scan
+        uses: GitGuardian/ggshield-action@v1.54.0
+        with:
+          args: scan repo .
+        env:
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+
+  # Job 3: SonarQubeCloud quality analysis
+  sonarqube:
+    name: SonarQubeCloud Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: SonarQube scan
+        uses: SonarSource/sonarqube-scan-action@v8.2.1
+        with:
+          args: >-
+            -Dsonar.projectKey=knot-rider
+            -Dsonar.organization=hyperpolymath
+            -Dsonar.sources=src,container
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+
+  # Job 4: CodeQL analysis
+  codeql:
+    name: CodeQL Analysis
+    uses: ./.github/workflows/codeql.yml
+    secrets: inherit
+
+  # Job 5: Dependabot
+  dependabot:
+    name: Dependabot
+    uses: ./.github/workflows/dependabot-automerge.yml
+    secrets: inherit
+
+  # Job 6: Container build
+  container:
+    name: Container Build
+    uses: ./.github/workflows/container-build.yml
+    secrets: inherit
