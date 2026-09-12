@@ -100,11 +100,11 @@ dependencies:
         repo_id: 496012378
         uses:
             - 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f'
-    'dawidd6/action-send-mail@v3.12.0':
-        ref: 'v3.12.0'
-        commit: 'sha1-12335b969ae3fb71bee5f2c6b829744261aec34c'
-        owner_id: 9713907
-        repo_id: 222439721
+    'hyperpolymath/smtp-notify-action@v0.2.0':
+        ref: 'v0.2.0'
+        commit: 'sha1-REPLACE_WITH_LOCKED_COMMIT_FOR_V0_2_0'
+        owner_id: REPLACE_WITH_HYPERPOLYMATH_OWNER_ID
+        repo_id: REPLACE_WITH_SMTP_NOTIFY_ACTION_REPO_ID
     'dependabot/fetch-metadata@v3.1.0':
         ref: 'v3.1.0'
         commit: 'sha1-25dd0e34f4fe68f24cc83900b1fe3fe149efef98'
