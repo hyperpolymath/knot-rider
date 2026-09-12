@@ -1,3 +1,4 @@
+# This workflow is managed by gh actions-lock.
 # SPDX-License-Identifier: MPL-2.0
 # Copyright (c) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 #
@@ -52,10 +53,10 @@ jobs:
     
     steps:
       - name: Checkout Knot-Rider repo
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae1152ce7e58e795571a2d79d0d5d966
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Checkout proven benchmarks repo
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae1152ce7e58e795571a2d79d0d5d966
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: ${{ env.BENCHMARKS_REPO }}
           path: proven
@@ -71,7 +72,7 @@ jobs:
           ./run.sh --all
           
       - name: Upload benchmark results
-        uses: actions/upload-artifact@0b7f8ab1809d7be77002c9244502a1468323976c
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
           name: knot-rider-benchmark-results
@@ -86,12 +87,12 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae1152ce7e58e795571a2d79d0d5d966
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
 
       - name: GitGuardian scan
-        uses: GitGuardian/ggshield-action@4a703dc496925eb3a123c01aab13aa01deaf9ce5
+        uses: GitGuardian/ggshield-action@v1.54.0
         with:
           args: scan repo .
         env:
@@ -105,12 +106,12 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae1152ce7e58e795571a2d79d0d5d966
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
 
       - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@5bc5285b684b9f0e940031dc8ddc4b6387a2f493
+        uses: SonarSource/sonarqube-scan-action@v8.2.1
         with:
           args: >-
             -Dsonar.projectKey=knot-rider
