@@ -19,7 +19,7 @@ repository, and is honest about what is *not yet* real.
   wires `zig build test` to the real tests in `src/main.zig` and
   `test/integration_test.zig`.
 * `src/interface/Abi/*.idr` — Idris2 ABI type/layout declarations
-  (`abi.ipkg`). `just lint` runs `idris2 --typecheck abi.ipkg`, a real
+  (`abi.ipkg`). `just lint` runs `idris2 --typecheck src/interface/abi.ipkg`, a real
   command; whether it currently passes was not verified in this pass because
   `idris2` was not available in this environment — see AFFIRMATION.adoc.
 

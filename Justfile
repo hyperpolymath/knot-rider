@@ -181,7 +181,7 @@ fmt-check:
 
 # Run linter (typechecks the Idris2 ABI seam)
 lint:
-    idris2 --typecheck abi.ipkg
+    idris2 --typecheck src/interface/abi.ipkg
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # INSTALL
