@@ -60,7 +60,7 @@ file. Bring a counter-example, a failing run, or a contradicting source.
 [cols="2,1,3",options="header"]
 |===
 | Claim | Status | Evidence
-| The Idris2 ABI seam (`abi.ipkg`) typechecks | not checked | `idris2` was not available in the environment this affirmation was written in; `just lint` runs `idris2 --typecheck abi.ipkg`, a real command, but its result is unverified
+| The Idris2 ABI seam (`abi.ipkg`) typechecks | not checked | `idris2` was not available in the environment this affirmation was written in; `just lint` runs `idris2 --typecheck src/interface/abi.ipkg`, a real command, but its result is unverified
 | GitHub Actions CI is green on this branch | not checked | this pass only ran the local toolchain; no CI run was observed before this affirmation was written
 | The FFI functions implement real, project-specific logic | false | they are the RSR template's example bodies (`knot_rider_init`, `knot_rider_process`, etc.), unmodified beyond the identifier rename from `{{project}}`
 | This project has a known, documented technical purpose | false | see README.adoc — genuinely undocumented anywhere in this repo or the wider estate
