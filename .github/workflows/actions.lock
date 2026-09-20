@@ -126,7 +126,7 @@ dependencies:
         repo_id: 331103973
     'gitguardian/ggshield-action@v1.54.0':
         ref: 'v1.54.0'
-        commit: 'sha1-4a703dc496925eb3a123c01aab13aa01deaf9ce5'
+        commit: 'sha1-7059aef1ffb7d2374ce27201144f5613beecefe0'
         owner_id: 27360172
         repo_id: 272400318
     'github/codeql-action@b96794f015dfd88f77b49b1c93e0fa7110f94c63':
@@ -169,7 +169,7 @@ dependencies:
         repo_id: 204253808
     'sonarsource/sonarqube-scan-action@v8.2.1':
         ref: 'v8.2.1'
-        commit: 'sha1-5bc5285b684b9f0e940031dc8ddc4b6387a2f493'
+        commit: 'sha1-22918119ff8e1ca75a623e15c8296b6ea4fbe28f'
         owner_id: 545988
         repo_id: 366408409
     'trufflesecurity/trufflehog@v3.95.8':
