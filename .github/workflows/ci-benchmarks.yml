@@ -112,7 +112,7 @@ jobs:
           fetch-depth: 0
 
       - name: SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@v8.2.1
+        uses: SonarSource/sonarqube-scan-action@v8.2.2
         with:
           args: >-
             -Dsonar.projectKey=knot-rider
