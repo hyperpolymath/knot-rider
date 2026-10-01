@@ -93,7 +93,7 @@ jobs:
           fetch-depth: 0
 
       - name: GitGuardian scan
-        uses: GitGuardian/ggshield-action@v1.54.0
+        uses: GitGuardian/ggshield-action@v1.55.0
         with:
           args: scan repo .
         env:
