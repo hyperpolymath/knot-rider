@@ -24,6 +24,11 @@ DOCS_DIR="$REPO_ROOT/docs"
 
 # Justified exceptions, relative to repo root. Empty by default.
 ALLOWED=()
+# docs/berrywiki/ and docs/wikis/ are wiki-SYNC source trees: their content is
+# mirrored to/from forge-hosted wikis (GitHub/GitLab), which are inherently
+# Markdown. Converting them to AsciiDoc would break the sync contract, so the
+# directories are allow-listed rather than the files.
+ALLOWED_DIRS=("docs/berrywiki/" "docs/wikis/")
 
 if [ ! -d "$DOCS_DIR" ]; then
     echo "PASS: no docs/ directory (nothing to check)"
@@ -38,6 +43,9 @@ for hit in "${HITS[@]}"; do
     skip=0
     for allowed in "${ALLOWED[@]}"; do
         if [ "$rel" = "$allowed" ]; then skip=1; break; fi
+    done
+    for allowed_dir in "${ALLOWED_DIRS[@]}"; do
+        if [[ "$rel" == "$allowed_dir"* ]]; then skip=1; break; fi
     done
     if [ $skip -eq 0 ]; then EXTRAS+=("$rel"); fi
 done

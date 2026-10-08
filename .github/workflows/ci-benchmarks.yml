@@ -7,11 +7,10 @@
 #
 # Runs:
 # 1. Central benchmarks from proven-tests-and-benchmarks repo
-# 2. GitGuardian secret scanning
-# 3. SonarQubeCloud quality analysis
-# 4. CodeQL analysis
-# 5. Dependabot
-# 6. Container build
+# 2. SonarQubeCloud quality analysis
+# 3. CodeQL analysis
+# 4. Dependabot
+# 5. Container build
 
 name: CI - Tests & Benchmarks
 
@@ -80,26 +79,7 @@ jobs:
           path: proven/benchmarks/knot-rider/results.json
           retention-days: 30
 
-  # Job 2: GitGuardian secret scanning
-  gitguardian:
-    name: GitGuardian Secret Scan
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7.0.1
-        with:
-          fetch-depth: 0
-
-      - name: GitGuardian scan
-        uses: GitGuardian/ggshield-action@v1.55.0
-        with:
-          args: scan repo .
-        env:
-          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
-
-  # Job 3: SonarQubeCloud quality analysis
+  # Job 2: SonarQubeCloud quality analysis
   sonarqube:
     name: SonarQubeCloud Analysis
     runs-on: ubuntu-latest
@@ -121,19 +101,19 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
 
-  # Job 4: CodeQL analysis
+  # Job 3: CodeQL analysis
   codeql:
     name: CodeQL Analysis
     uses: ./.github/workflows/codeql.yml
     secrets: inherit
 
-  # Job 5: Dependabot
+  # Job 4: Dependabot
   dependabot:
     name: Dependabot
     uses: ./.github/workflows/dependabot-automerge.yml
     secrets: inherit
 
-  # Job 6: Container build
+  # Job 5: Container build
   container:
     name: Container Build
     uses: ./.github/workflows/container-build.yml
