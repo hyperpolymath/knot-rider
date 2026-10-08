@@ -39,6 +39,7 @@ coordination.k9            # repo-local session binding (template-mandated)
 .gitattributes
 .github/hooks/                 # Repository-owned validation hooks installed by the documented hook setup.
 .gitignore
+.cicd-hygiene-allow        # code-hygiene gate allowlist; template scaffolds are seams, not debt
 .hypatia-ignore           # Hypatia scan ignore patterns
 .mise.toml                # mise tool versions file (replaces .tool-versions for mise users)
 .tool-versions
