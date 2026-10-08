@@ -52,7 +52,6 @@ info:
     @echo "Version: {{version}}"
     @echo "RSR Tier: {{tier}}"
     @echo "Recipes: $(just --summary | wc -w)"
-    @[ -f ".machine_readable/6a2/STATE.a2ml" ] && grep -oP 'phase\s*=\s*"\K[^"]+' .machine_readable/6a2/STATE.a2ml | head -1 | xargs -I{} echo "Phase: {}" || true
 
 # Run Invariant Path overlay tools for this repository
 invariant-path *ARGS:
@@ -336,16 +335,14 @@ import? "build/just/validate.just"
 # STATE MANAGEMENT
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Update STATE.a2ml timestamp
+# Update the state timestamp. A2ML STATE is retired (D99/D269c) and this repo
+# has no <repo>_chora.deed yet, so there is nothing to touch.
 state-touch:
-    @if [ -f ".machine_readable/6a2/STATE.a2ml" ]; then \
-        sed -i 's/last-updated = "[^"]*"/last-updated = "'"$(date +%Y-%m-%d)"'"/' .machine_readable/6a2/STATE.a2ml && \
-        echo "STATE.a2ml timestamp updated"; \
-    fi
+    @echo "state-touch: no *_chora.deed yet — nothing to update"
 
-# Show current phase from STATE.a2ml
+# Show the current phase. Unknown until the repo has a <repo>_chora.deed.
 state-phase:
-    @grep -oP 'phase\s*=\s*"\K[^"]+' .machine_readable/6a2/STATE.a2ml 2>/dev/null | head -1 || echo "unknown"
+    @echo "unknown (no *_chora.deed)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # GUIX

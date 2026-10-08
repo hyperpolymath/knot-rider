@@ -65,18 +65,15 @@ jobs:
             exit 1
           fi
           echo "README: OK"
-      - name: Check .machine_readable directory and STATE.a2ml
+      - name: Check .machine_readable directory
         run: |
+          # A2ML STATE is retired (D99/D269c); state moves to <repo>_chora.deed
+          # (D312), so only the directory itself is required here.
           if [ ! -d ".machine_readable" ]; then
             echo "::error::.machine_readable/ directory is required"
             exit 1
           fi
-
-          if [ ! -f ".machine_readable/6a2/STATE.a2ml" ]; then
-            echo "::error::.machine_readable/6a2/STATE.a2ml is required"
-            exit 1
-          fi
-          echo ".machine_readable/6a2/STATE.a2ml: OK"
+          echo ".machine_readable/: OK"
       - name: Check CHANGELOG exists
         run: |
           if [ ! -f "CHANGELOG.md" ] && [ ! -f "CHANGELOG.adoc" ] && [ ! -f "CHANGES.md" ]; then
